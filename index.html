@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ffffff;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -17,48 +17,44 @@
       margin: 0;
       text-align: center;
       overflow: hidden;
-      padding: 0 16px;
     }
     .pick-button {
       padding: 16px 14px;
-      background-color: #fff;
-      color: #3FA9F5;
+      background-color: #AC5FD9;
+      color: #fff;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 600;
       transition: background 0.3s ease;
     }
     .suggestion {
       font-size: 14px;
       color: #2c3e50;
-      width: 100%;
       opacity: 0;
       animation: fadeIn 0.6s ease forwards;
       position: relative;
       z-index: 2;
     }
     .drink-name {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 900;
       text-transform: uppercase;
-      margin-top: 4px;
-      color: #3FA9F5;
+      color: #AC5FD9;
     }
     .choice-buttons {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-/*       gap: 8px; */
       margin-top: 8px;
       opacity: 0;
       animation: fadeIn 0.6s ease 0.2s forwards;
       z-index: 2;
     }
     .choice-buttons button {
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 400;
       border-radius: 8px;
       padding: 4px;
       border: none;
@@ -70,16 +66,13 @@
       color: #554D59;
     }
     .choice-buttons button i {
-      color: #3FA9F5;
-      font-weight: 800;
-      font-size: 16px;
+      color: #AC5FD9;
+      font-weight: 900;
+      font-size: 18px;
     }
      .choice-buttons button:first-child {
       padding: 8px 8px;
     }
-/*     .choice-buttons button:last-child {
-      color: #554D59;
-    } */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -171,7 +164,7 @@
         <div style="font-size: 20px; font-weight: 900; margin-top: 8px;">🎉 Let’s gooo!</div>
         <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
         <div style="margin-top: 16px;">
-          <button onclick="resetSuggestion()" style="background: none; border: none; color: #3FA9F5; font-size: 14px; margin:4px auto; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <button onclick="resetSuggestion()" style="background: none; border: none; color: #AC5FD9; font-size: 14px; margin:4px auto; display: flex; align-items: center; justify-content: center; gap: 8px;">
             <i class="fi fi-rr-refresh"></i> Spin again
           </button>
         </div>
