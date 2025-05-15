@@ -164,7 +164,10 @@
     }
 
     function acceptSuggestion() {
-      document.getElementById("suggestion").innerText = "Let’s gooo!<br>Tell the crew what you picked.";
+      document.getElementById("suggestion").innerHTML = `
+        <div style="font-size: 20px; font-weight: 900;">🎉 Let’s gooo!</div>
+        <div style="margin-top: 4px;">Tell the crew what you picked.</div>
+      `;
       document.getElementById("choiceButtons").innerHTML = "";
     }
   </script>
