@@ -57,7 +57,7 @@
       font-size: 14px;
       font-weight: 500;
       border-radius: 8px;
-      border: hidden;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -101,6 +101,7 @@
   <button class="pick-button" id="pickButton" onclick="suggestDrink()">Suggest One!</button>
   <div class="suggestion" id="suggestion"></div>
   <div class="choice-buttons" id="choiceButtons"></div>
+
   <script>
     const fullDrinkList = [
       "Espresso", "Americano", "Macchiato", "Caramel Macchiato", "Mocha", "White Mocha", "Flat White", "Cortado", "Cappuccino", "Latte", "Latte Lotus", "Latte Pistachio", "Mocha Iced", "White Mocha Iced", "Americano Iced", "Latte Iced", "Spanish Latte", "Caramel Macchiato Iced", "Espresso Orange Iced", "Frappuccino", "Caramel Frappe", "Mocha Frappe", "White Mocha Frappe", "Toffee Nut Frappe", "Hazelnut Frappe", "Vanilla Frappe", "Lemon Mint Mojito", "Peach Mojito", "Blue Curacao Mojito", "Watermelon Juice", "Watermelon Mint Juice", "Tea", "Flavor Tea", "Green Tea With Mint", "Earl Gray", "Herbs", "Turkish Coffee", "French Coffee", "Hot Dark Chocolate", "Hot White Chocolate", "Hot Seder", "Sahlab", "Peach Milk Blend", "Mango Milk Blend", "Strawberry Milk Blend", "Kiwi Milk Blend", "Mix Berry Milk Blend", "Caramel Milk Blend", "Vanilla Milk Blend", "Mango Juice", "Strawberry Juice", "Kiwi Juice", "Orange Juice", "Lemon Classic Juice", "Pink Lemon Juice", "Pina Colada Smoothie", "Pineapple Smoothie", "Mix Berry Smoothie", "Tropical Hut", "Green Mix", "Energy Mix", "Oreo Iced Chocolate", "Strawberry Iced Chocolate", "Hazelnut Iced Chocolate", "Chocolate Waffle", "Pistachio Waffle", "Coffee Waffle", "Caramel Waffle", "Lotus Waffle", "Sweet Lovers Yogurt", "Fruit Crush Yogurt"
@@ -114,22 +115,22 @@
       pickButton.style.display = 'none';
 
       const randomDrink = fullDrinkList[Math.floor(Math.random() * fullDrinkList.length)];
-      suggestion.innerHTML = 
+      suggestion.innerHTML = `
         <div>Selected for you</div>
         <div class="drink-name">${randomDrink}?</div>
-      ;
+      `;
       suggestion.style.animation = 'none';
       void suggestion.offsetWidth;
       suggestion.style.animation = null;
 
-      buttons.innerHTML = 
+      buttons.innerHTML = `
         <button onclick="acceptSuggestion()">
-         <i class="fi fi-rr-social-network"></i>Sounds Good
+          <i class="fi fi-rr-social-network"></i>Sounds Good
         </button>
         <button onclick="suggestDrink()">
           <i class="fi fi-rr-hand"></i>Spin again
         </button>
-      ;
+      `;
       buttons.style.animation = 'none';
       void buttons.offsetWidth;
       buttons.style.animation = null;
@@ -144,11 +145,11 @@
       for (let i = 0; i < 30; i++) {
         const confetti = document.createElement("div");
         confetti.className = "confetti";
-        confetti.style.backgroundColor = hsl(${Math.random() * 360}, 100%, 60%);
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
         confetti.style.left = centerX + 'px';
         confetti.style.top = centerY + 'px';
-        confetti.style.setProperty('--x', ${Math.random() * 200 - 100}px);
-        confetti.style.setProperty('--y', ${Math.random() * 200 - 100}px);
+        confetti.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
+        confetti.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 1600);
       }
@@ -158,7 +159,7 @@
       const suggestion = document.getElementById("suggestion");
       const buttons = document.getElementById("choiceButtons");
 
-      suggestion.innerHTML = 
+      suggestion.innerHTML = `
         <div style="font-size: 20px; font-weight: 900;">🎉 Let’s gooo!</div>
         <div style="margin-top: 4px;">Tell the crew what you picked.</div>
         <div style="margin-top: 16px;">
@@ -166,7 +167,7 @@
             <i class="fi fi-rr-refresh"></i> Spin again
           </button>
         </div>
-      ;
+      `;
 
       buttons.innerHTML = "";
     }
