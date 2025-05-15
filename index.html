@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caffeine Check - Coffee Hut</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fef8ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      color: #7B1FA2;
+    }
+    button {
+      padding: 12px 24px;
+      background-color: #7B1FA2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #9c27b0;
+    }
+    .result, .suggestion {
+      margin-top: 30px;
+      font-size: 1.3rem;
+      color: #333;
+      max-width: 400px;
+    }
+    .choice-buttons button {
+      margin: 10px;
+      background-color: #E1BEE7;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Check Your Caffeine Level</h1>
+  <p>Not sure if you're awake enough? Let's find out 👀</p>
+  <button onclick="checkCaffeine()">Test My Level</button>
+  <div class="result" id="result"></div>
+  <div class="suggestion" id="suggestion"></div>
+  <div class="choice-buttons" id="choiceButtons"></div>
+
+  <script>
+    function checkCaffeine() {
+      const hour = new Date().getHours();
+      const result = document.getElementById("result");
+      const suggestion = document.getElementById("suggestion");
+      const buttons = document.getElementById("choiceButtons");
+
+      result.innerHTML = "";
+      suggestion.innerHTML = "";
+      buttons.innerHTML = "";
+
+      if (hour < 12) {
+        result.innerText = "🔴 Morning vibes but no caffeine detected... let's fix that! ☀️";
+      } else if (hour < 17) {
+        result.innerText = "🟡 Midday slump? Time to refuel with a little caffeine!";
+      } else {
+        result.innerText = "🟢 Evening already? Still need a boost? Let us suggest something...";
+      }
+
+      suggestDrink();
+    }
+
+    const drinks = [
+      "Espresso", "Latte", "Iced Americano", "Mocha", "Spanish Latte", "Cold Brew", "Turkish Coffee"
+    ];
+
+    function suggestDrink() {
+      const suggestion = document.getElementById("suggestion");
+      const buttons = document.getElementById("choiceButtons");
+
+      const randomDrink = drinks[Math.floor(Math.random() * drinks.length)];
+      suggestion.innerText = `How about trying a ${randomDrink}?`;
+
+      buttons.innerHTML = `
+        <button onclick="acceptSuggestion()">Sounds good!</button>
+        <button onclick="suggestDrink()">Show me another ☕</button>
+      `;
+    }
+
+    function acceptSuggestion() {
+      document.getElementById("suggestion").innerText = "Awesome choice! Head to the counter and order it now 🙌";
+      document.getElementById("choiceButtons").innerHTML = "";
+    }
+  </script>
+</body>
+</html>
