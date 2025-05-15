@@ -41,8 +41,8 @@
     }
     .drink-name {
       font-size: 24px;
-      font-weight: 800;
-      margin-top: 4px;
+      font-weight: 900;
+      margin-top: 0px;
     }
     .choice-buttons {
       display: flex;
@@ -69,9 +69,10 @@
       border: none;
     }
     .choice-buttons button:last-child {
-      background-color: #ffffff;
+/*       background-color: #ffffff; */
+      padding: 0;
       color: #3FA9F5;
-      border: 1px solid #3FA9F5;
+/*       border: 1px solid #3FA9F5; */
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -124,7 +125,7 @@
 
       const randomDrink = fullDrinkList[Math.floor(Math.random() * fullDrinkList.length)];
       suggestion.innerHTML = `
-        <div>How about trying a</div>
+        <div>Selected for you</div>
         <div class="drink-name">${randomDrink}?</div>
       `;
       suggestion.style.animation = 'none';
