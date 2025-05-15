@@ -33,7 +33,7 @@
     .suggestion {
       font-size: 16px;
       color: #2c3e50;
-      width: 100%;
+      width: 80%;
       opacity: 0;
       animation: fadeIn 0.6s ease forwards;
       position: relative;
@@ -133,10 +133,10 @@
 
       buttons.innerHTML = `
         <button onclick="acceptSuggestion()">
-          <i class="fa-light fa-thumbs-up"><span>Sounds Good</span>
+          <i class="fa-light fa-thumbs-up"></i><span>Sounds Good</span>
         </button>
         <button onclick="suggestDrink()">
-          <i class="fa-light fa-thumbs-down"></i></i><span>Spin again</span>
+          <i class="fa-light fa-thumbs-down"></i><span>Spin again</span>
         </button>
       `;
       buttons.style.animation = 'none';
@@ -164,7 +164,7 @@
     }
 
     function acceptSuggestion() {
-      document.getElementById("suggestion").innerText = "Great choice! Head to the counter and grab it 🙌";
+      document.getElementById("suggestion").innerText = "Let’s gooo!<br>Tell the crew what you picked.";
       document.getElementById("choiceButtons").innerHTML = "";
     }
   </script>
