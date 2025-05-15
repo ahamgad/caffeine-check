@@ -6,6 +6,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
   <style>
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+    }
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.2s ease-in-out forwards;
+    }
+    * {
+      transition: all 0.3s ease-in-out;
+    }
     body {
       font-family: 'Inter', sans-serif;
       background-color: #fff;
@@ -18,11 +29,15 @@
       text-align: center;
       overflow: hidden;
     }
-    body i {
-      padding-top: 2px;
+    #initialOptions, #subOptions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    .pick-button {
-      padding: 16px 14px;
+    .option-button {
+      padding: 16px 16px;
+      margin: 4px 0;
       background-color: #AC5FD9;
       color: #fff;
       border: none;
@@ -30,13 +45,11 @@
       font-size: 14px;
       font-weight: 600;
       transition: background 0.3s ease;
+      width: 220px;
     }
     .suggestion {
-      font-size: 14px;
-      color: #2c3e50;
       opacity: 0;
       animation: fadeIn 0.6s ease forwards;
-      position: relative;
       z-index: 2;
     }
     .drink-name {
@@ -45,19 +58,22 @@
       text-transform: uppercase;
       color: #AC5FD9;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     .choice-buttons {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      gap: 12px;
       justify-content: center;
-      margin-top: 12px;
-      opacity: 0;
-      animation: fadeIn 0.6s ease 0.2s forwards;
+      margin-top: 16px;
+      opacity: 1;
       z-index: 2;
     }
     .choice-buttons button {
-      font-size: 16px;
-      font-weight: 400;
+      font-size: 14px;
+      font-weight: 600;
       border-radius: 8px;
       padding: 8px;
       border: none;
@@ -67,18 +83,11 @@
       gap: 8px;
       background-color: #fff;
       color: #554D59;
-    }
-    .choice-buttons button i {
-      color: #AC5FD9;
-      font-weight: 800;
-      font-size: 18px;
-    }
-     .choice-buttons button:first-child {
-      padding: 8px 8px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      i {
+        color: #AC5FD9;
+        font-weight: 900;
+        font-size: 16px;
+      }
     }
     .confetti {
       position: absolute;
@@ -89,6 +98,13 @@
       opacity: 0.9;
       animation: explode 1.6s ease-out forwards;
       z-index: 1;
+    }
+    .page-title {
+      color:#554D59;
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      text-transform: uppercase;
     }
     @keyframes explode {
       0% {
@@ -102,44 +118,137 @@
     }
   </style>
 </head>
-<body style="margin: 0;">
-  <button class="pick-button" id="pickButton" onclick="suggestDrink()">🤔 Suggest One</button>
-  <div class="suggestion" id="suggestion"></div>
-  <div class="choice-buttons" id="choiceButtons"></div>
+<body>
+  <h2 id="mainTitle" class="page-title">Pick your style</h2>
+  <div id="initialOptions">
+    <button class="option-button" id="coffeeBtn">Coffee Drinks</button>
+    <button class="option-button" id="noncoffeeBtn">Non-Coffee Drinks</button>
+    <button class="option-button" id="snacksBtn">Snacks</button>
+  </div>
+
+  <div id="subOptions"></div>
+  <div id="suggestion" class="suggestion"></div>
+  <div id="choiceButtons" class="choice-buttons"></div>
 
   <script>
-    const fullDrinkList = [
-      "Espresso", "Americano", "Macchiato", "Caramel Macchiato", "Mocha", "White Mocha", "Flat White", "Cortado", "Cappuccino", "Latte", "Latte Lotus", "Latte Pistachio", "Mocha Iced", "White Mocha Iced", "Americano Iced", "Latte Iced", "Spanish Latte", "Caramel Macchiato Iced", "Espresso Orange Iced", "Frappuccino", "Caramel Frappe", "Mocha Frappe", "White Mocha Frappe", "Toffee Nut Frappe", "Hazelnut Frappe", "Vanilla Frappe", "Lemon Mint Mojito", "Peach Mojito", "Blue Curacao Mojito", "Watermelon Juice", "Watermelon Mint Juice", "Tea", "Flavor Tea", "Green Tea With Mint", "Earl Gray", "Herbs", "Turkish Coffee", "French Coffee", "Hot Dark Chocolate", "Hot White Chocolate", "Hot Seder", "Sahlab", "Peach Milk Blend", "Mango Milk Blend", "Strawberry Milk Blend", "Kiwi Milk Blend", "Mix Berry Milk Blend", "Caramel Milk Blend", "Vanilla Milk Blend", "Mango Juice", "Strawberry Juice", "Kiwi Juice", "Orange Juice", "Lemon Classic Juice", "Pink Lemon Juice", "Pina Colada Smoothie", "Pineapple Smoothie", "Mix Berry Smoothie", "Tropical Hut", "Green Mix", "Energy Mix", "Oreo Iced Chocolate", "Strawberry Iced Chocolate", "Hazelnut Iced Chocolate", "Chocolate Waffle", "Pistachio Waffle", "Coffee Waffle", "Caramel Waffle", "Lotus Waffle", "Sweet Lovers Yogurt", "Fruit Crush Yogurt"
-    ];
+    function vibrate(duration = 50) {
+      if (navigator.vibrate) navigator.vibrate(duration);
+    }
 
-    function suggestDrink() {
+    const menus = {
+      coffee: {
+        hot: ["Espresso", "Latte", "Cappuccino", "Flat White", "Macchiato"],
+        iced: ["Iced Latte", "Iced Americano", "Iced Mocha", "Cold Brew"]
+      },
+      noncoffee: {
+        cold: ["Mojito", "Smoothie", "Juice", "Pink Lemonade", "Iced Chocolate"],
+        hot: ["Herbal Tea", "Green Tea", "Hot Chocolate", "Milk with Honey"]
+      },
+      snacks: ["Chocolate Waffle", "Fruit Yogurt", "Cookies", "Brownie", "Pancakes"]
+    };
+
+    document.getElementById("coffeeBtn").onclick = () => { vibrate(); selectCategory("coffee"); };
+    document.getElementById("noncoffeeBtn").onclick = () => { vibrate(); selectCategory("noncoffee"); };
+    document.getElementById("snacksBtn").onclick = () => { vibrate(); selectCategory("snacks"); };
+
+    function selectCategory(category) {
+      document.getElementById("initialOptions").classList.add("fade-out");
+      document.getElementById("mainTitle").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("mainTitle").style.display = "none";
+        document.getElementById("initialOptions").style.display = "none";
+        document.getElementById("suggestion").innerHTML = "";
+        document.getElementById("choiceButtons").innerHTML = "";
+        const sub = document.getElementById("subOptions");
+        const titleMap = {
+          coffee: 'Coffee Drinks',
+          noncoffee: 'Non-Coffee Drinks',
+          snacks: 'Snacks'
+        };
+
+        if (category === 'coffee' || category === 'noncoffee') {
+          const titleHeader = `<h3 class='page-title'>${titleMap[category]}</h3>`;
+          const option1 = category === 'coffee' ? 'hot' : 'cold';
+          const option2 = category === 'coffee' ? 'iced' : 'hot';
+          const label1 = category === 'coffee' ? 'Hot Coffee' : 'Refresh Me';
+          const label2 = category === 'coffee' ? 'Iced Coffee' : 'Keep Me Warm';
+          const option1Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option1}')">${label1}</button>`;
+          const option2Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option2}')">${label2}</button>`;
+          sub.innerHTML = titleHeader + option1Btn + option2Btn;
+        } else {
+          const title = `<h3 class='page-title'>${titleMap[category]}</h3>`;
+          const snackButton = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}')">Pick one for me</button>`;
+          sub.innerHTML = title + snackButton;
+        }
+      }, 200);
+    }
+
+    let selectedDrink = "";
+    function suggestDrink(category, subcategory = null) {
+      document.getElementById("subOptions").classList.add("fade-out");
+      setTimeout(() => {
+        const suggestion = document.getElementById("suggestion");
+        suggestion.classList.add("fade-in");
+        const buttons = document.getElementById("choiceButtons");
+        document.getElementById("subOptions").innerHTML = "";
+        document.getElementById("subOptions").classList.remove("fade-out");
+
+        let list = subcategory ? menus[category][subcategory] : menus[category];
+
+        const randomDrink = list[Math.floor(Math.random() * list.length)];
+        selectedDrink = randomDrink;
+        suggestion.innerHTML = `<div class='drink-name' id='drinkText'>${randomDrink}?</div>`;
+        suggestion.style.animation = 'none';
+        void suggestion.offsetWidth;
+        suggestion.style.animation = null;
+
+        const textEl = document.getElementById("drinkText");
+        if (textEl) {
+          setTimeout(() => launchConfetti(textEl), 50);
+        }
+
+        buttons.innerHTML = `
+          <button onclick="vibrate(); acceptSuggestion()">
+            <i class="fi fi-rr-social-network"></i>
+          </button>
+          <button onclick="vibrate(); suggestDrink('${category}', '${subcategory || ''}')">
+            <i class="fi fi-rr-hand"></i>Spin again
+          </button>
+        `;
+      }, 200);
+    }
+
+    function acceptSuggestion() {
       const suggestion = document.getElementById("suggestion");
       const buttons = document.getElementById("choiceButtons");
-      const pickButton = document.getElementById("pickButton");
+      buttons.style.opacity = 1;
 
-      pickButton.style.display = 'none';
-
-      const randomDrink = fullDrinkList[Math.floor(Math.random() * fullDrinkList.length)];
       suggestion.innerHTML = `
-        <div class="drink-name">${randomDrink}?</div>
+        <div class="page-title">${selectedDrink}</div>
+        <div class='drink-name'>🎉 Let’s gooo!</div>
+        <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
+        <div class='choice-buttons'>
+          <button onclick="vibrate(); resetGame()">
+            <i class="fi fi-rr-refresh"></i> Spin again
+          </button>
+        </div>
       `;
-      suggestion.style.animation = 'none';
-      void suggestion.offsetWidth;
-      suggestion.style.animation = null;
 
-      buttons.innerHTML = `
-        <button onclick="acceptSuggestion()">
-          <i class="fi fi-rr-social-network"></i>
-        </button>
-        <button onclick="suggestDrink()">
-          <i class="fi fi-rr-hand"></i>Spin again
-        </button>
-      `;
-      buttons.style.animation = 'none';
-      void buttons.offsetWidth;
-      buttons.style.animation = null;
+      buttons.innerHTML = "";
+    }
 
-      launchConfetti(suggestion);
+    function resetGame() {
+      document.getElementById("initialOptions").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("choiceButtons").classList.add("fade-in");
+        document.getElementById("suggestion").innerHTML = "";
+        document.getElementById("choiceButtons").innerHTML = "";
+        document.getElementById("subOptions").innerHTML = "";
+        document.getElementById("initialOptions").style.display = "flex";
+        document.getElementById("initialOptions").classList.remove("fade-out");
+        document.getElementById("mainTitle").style.display = "block";
+        document.getElementById("mainTitle").classList.remove("fade-out");
+      }, 200);
     }
 
     function launchConfetti(centerEl) {
@@ -157,29 +266,6 @@
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 1600);
       }
-    }
-
-    function acceptSuggestion() {
-      const suggestion = document.getElementById("suggestion");
-      const buttons = document.getElementById("choiceButtons");
-
-      suggestion.innerHTML = `
-        <div style="font-size: 20px; font-weight: 900; margin-top: 8px;">🎉 Let’s gooo!</div>
-        <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
-        <div style="margin-top: 16px;">
-          <button onclick="resetSuggestion()" style="background: none; border: none; color: #AC5FD9; font-weight: 400; font-size: 16px; margin:4px auto; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <i font-weight: 800; font-size: 18px; class="fi fi-rr-refresh"></i> Spin again
-          </button>
-        </div>
-      `;
-
-      buttons.innerHTML = "";
-    }
-
-    function resetSuggestion() {
-      document.getElementById("suggestion").innerHTML = "";
-      document.getElementById("choiceButtons").innerHTML = "";
-      document.getElementById("pickButton").style.display = "inline-block";
     }
   </script>
 </body>
