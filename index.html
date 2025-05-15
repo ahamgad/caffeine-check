@@ -142,14 +142,14 @@
 
     const menus = {
       coffee: {
-        hot: ["Espresso", "Latte", "Cappuccino", "Flat White", "Macchiato"],
-        iced: ["Iced Latte", "Iced Americano", "Iced Mocha", "Cold Brew"]
+        hot: ["Espresso", "Americano", "Macchiato", "Caramel Macchiato", "Mocha", "White Mocha", "Flat White", "Cortado", "Cappuccino", "Latte", "Latte Lotus", "Latte Pistachio", "Turkish Coffee", "French Coffee"],
+        iced: ["Mocha Iced", "White Mocha Iced", "Americano Iced", "Latte Iced", "Spanish Latte", "Caramel Macchiato Iced", "Espresso Orange Iced", "Frappuccino", "Caramel Frappe", "Mocha Frappe", "White Mocha Frappe", "Toffee Nut Frappe", "Hazelnut Frappe", "Vanilla Frappe"]
       },
       noncoffee: {
-        cold: ["Mojito", "Smoothie", "Juice", "Pink Lemonade", "Iced Chocolate"],
-        hot: ["Herbal Tea", "Green Tea", "Hot Chocolate", "Milk with Honey"]
+        cold: ["Lemon Mint Mojito", "Peach Mojito", "Blue Curacao Mojito", "Watermelon Juice", "Watermelon Mint Juice", "Peach Milk Blend", "Mango Milk Blend", "Strawberry Milk Blend", "Kiwi Milk Blend", "Mix Berry Milk Blend", "Caramel Milk Blend", "Vanilla Milk Blend", "Mango Juice", "Strawberry Juice", "Kiwi Juice", "Orange Juice", "Lemon Classic Juice", "Pink Lemon Juice", "Pina Colada Smoothie", "Pineapple Smoothie", "Mix Berry Smoothie", "Tropical Hut", "Green Mix", "Energy Mix", "Oreo Iced Chocolate", "Strawberry Iced Chocolate", "Hazelnut Iced Chocolate"],
+        hot: ["Tea", "Flavor Tea", "Green Tea With Mint", "Earl Gray", "Herbs", "Hot Dark Chocolate", "Hot White Chocolate", "Hot Seder", "Sahlab"]
       },
-      snacks: ["Chocolate Waffle", "Fruit Yogurt", "Cookies", "Brownie", "Pancakes"]
+      snacks: ["Chocolate Waffle", "Pistachio Waffle", "Coffee Waffle", "Caramel Waffle", "Lotus Waffle", "Half & Half Waffle", "Sweet Lovers Yogurt", "Fruit Crush Yogurt", "Cookies"]
     };
 
     document.getElementById("coffeeBtn").onclick = () => { vibrate(); selectCategory("coffee"); };
@@ -230,7 +230,7 @@
 
       suggestion.innerHTML = `
         <div class="page-title">${selectedDrink}</div>
-        <div class='drink-name'>🎉 Let’s gooo!</div>
+        <div class='drink-name'>🎉  Let’s gooo!</div>
         <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
         <div class='choice-buttons'>
           <button onclick="vibrate(); resetGame()">
