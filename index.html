@@ -184,9 +184,7 @@
           const option2Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option2}')">${label2}</button>`;
           sub.innerHTML = titleHeader + option1Btn + option2Btn;
         } else {
-          const title = `<h3 class='page-title'>${titleMap[category]}</h3>`;
-          const snackButton = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}')">Pick one for me</button>`;
-          sub.innerHTML = title + snackButton;
+          suggestDrink(category);
         }
       }, 200);
     }
