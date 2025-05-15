@@ -65,10 +65,10 @@
     .choice-buttons button:first-child {
       background-color: #3FA9F5;
       color: white;
-      border: none;
+/*       border: transparent; */
     }
     .choice-buttons button:last-child {
-      background-color: none;
+      background-color: transparent;
       padding: 0;
       color: #3FA9F5;
     }
@@ -132,10 +132,10 @@
 
       buttons.innerHTML = `
         <button onclick="acceptSuggestion()">
-          <i class="fa-light fa-thumbs-up"></i><span>Sounds Good</span>
+          <i class="fa-regular fa-thumbs-up"></i><span>Sounds Good</span>
         </button>
         <button onclick="suggestDrink()">
-          <i class="fa-light fa-thumbs-down"></i><span>Spin again</span>
+          <i class="fa-regular fa-thumbs-down"></i><span>Spin again</span>
         </button>
       `;
       buttons.style.animation = 'none';
