@@ -78,7 +78,7 @@
     }
     .choice-buttons button {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       border-radius: 8px;
       padding: 8px;
       border: none;
@@ -92,7 +92,7 @@
     .choice-buttons button i {
       color: #AC5FD9;
       font-weight: 900;
-      font-size: 16px;
+      font-size: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -218,7 +218,7 @@
             <i class="fi fi-rr-social-network"></i>
           </button>
           <button onclick="vibrate(); suggestDrink('${category}', '${subcategory || ''}')">
-            <i class="fi fi-rr-hand"></i>Spin again
+            <i class="fi fi-rr-hand"></i>Spin Again
           </button>
         `;
       }, 200);
@@ -235,7 +235,7 @@
         <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
         <div class='choice-buttons'>
           <button onclick="vibrate(); resetGame()">
-            <i class="fi fi-rr-refresh"></i> Spin again
+            <i style="font-size: 14px;" class="fi fi-rr-refresh"></i> Spin Again
           </button>
         </div>
       `;
