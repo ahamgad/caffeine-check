@@ -16,7 +16,6 @@
       height: 100vh;
       margin: 0;
       text-align: center;
-/*       padding-top: 100px; */
       overflow: hidden;
     }
     .pick-button {
@@ -61,11 +60,11 @@
       flex-direction: row;
       align-items: center;
       gap: 8px;
-      }
+    }
     .choice-buttons button:first-child {
       background-color: #3FA9F5;
       color: white;
-/*       border: transparent; */
+      border: none;
     }
     .choice-buttons button:last-child {
       background-color: transparent;
@@ -163,11 +162,26 @@
     }
 
     function acceptSuggestion() {
-      document.getElementById("suggestion").innerHTML = `
+      const suggestion = document.getElementById("suggestion");
+      const buttons = document.getElementById("choiceButtons");
+
+      suggestion.innerHTML = `
         <div style="font-size: 20px; font-weight: 900;">🎉 Let’s gooo!</div>
         <div style="margin-top: 4px;">Tell the crew what you picked.</div>
+        <div style="margin-top: 16px;">
+          <button onclick="resetSuggestion()" style="background: none; border: none; color: #3FA9F5; font-size: 24px;">
+            <i class="fa-regular fa-arrows-rotate"></i>
+          </button>
+        </div>
       `;
+
+      buttons.innerHTML = "";
+    }
+
+    function resetSuggestion() {
+      document.getElementById("suggestion").innerHTML = "";
       document.getElementById("choiceButtons").innerHTML = "";
+      document.getElementById("pickButton").style.display = "inline-block";
     }
   </script>
 </body>
