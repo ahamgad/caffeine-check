@@ -127,7 +127,7 @@
   <h2 id="mainTitle" class="page-title">Pick your style</h2>
   <div id="initialOptions">
     <button class="option-button" id="coffeeBtn"><i class="fi fi-rr-coffee-bean"></i>Coffee Drinks</button>
-    <button class="option-button" id="noncoffeeBtn"><i class="fi fi-br-glass-water-droplet"></i>Non-Coffee Drinks</button>
+    <button class="option-button" id="noncoffeeBtn"><i class="fi fi-rr-glass-champagne"></i>Non-Coffee Drinks</button>
     <button class="option-button" id="snacksBtn"><i class="fi fi-rr-candy"></i></i>Snacks</button>
   </div>
 
@@ -175,8 +175,8 @@
           const titleHeader = `<h3 class='page-title'>${titleMap[category]}</h3>`;
           const option1 = category === 'coffee' ? 'hot' : 'cold';
           const option2 = category === 'coffee' ? 'iced' : 'hot';
-          const label1 = category === 'coffee' ? '<i class="fi fi-rr-mug-hot"></i>Hot Coffee' : '<i class="fi fi-rr-cup-straw-swoosh"></i>Refresh Me';
-          const label2 = category === 'coffee' ? '<i class="fi fi-rr-cup-straw-swoosh"></i>Iced Coffee' : '<i class="fi fi-rr-mug-hot"></i>Keep Me Warm';
+          const label1 = category === 'coffee' ? '<i class="fi fi-rr-mug-hot"></i>Hot Coffee' : '<i class="fi fi-rr-glass-citrus"></i>Refresh Me';
+          const label2 = category === 'coffee' ? '<i class="fi fi-rr-beer"></i>Iced Coffee' : '<i class="fi fi-rr-mug-hot"></i>Keep Me Warm';
           const option1Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option1}')">${label1}</button>`;
           const option2Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option2}')">${label2}</button>`;
           sub.innerHTML = titleHeader + option1Btn + option2Btn;
