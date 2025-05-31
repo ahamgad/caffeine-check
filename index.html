@@ -226,6 +226,10 @@
         (elapsed<delay?'Next challenge loading ⏳':'Your reward is waiting for you 🏆');
       desc.textContent = currentDesc; content.append(desc);
       let status;
+      const btn = document.createElement('button');
+      btn.textContent = (step === 0 || step === 1) ? 'Next Mission' : 'Claim Now';
+      btn.disabled=(step>0&&elapsed<delay); content.append(btn);
+
       if (step>0 && elapsed<delay) {
         status = document.createElement('div'); status.className='status'; status.textContent=formatTime(delay-elapsed); content.append(status);
         window.timer = setInterval(()=>{
@@ -238,9 +242,6 @@
           }
         },1000);
       }
-      const btn = document.createElement('button');
-      btn.textContent = (step === 0 || step === 1) ? 'Next Mission' : 'Claim Now';
-      btn.disabled=(step>0&&elapsed<delay); content.append(btn);
 
       btn.addEventListener('click',()=>{
         checkProximity(error => {
@@ -254,6 +255,7 @@
           }
         });
       });
+
       card.append(content); root.append(card); requestAnimationFrame(()=>card.classList.add('show'));
     }
     if (!localStorage.stepStart) save(); render();
