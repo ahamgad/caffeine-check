@@ -6,259 +6,281 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #FCFCFC;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', sans-serif;
-      padding: 16px;
-    }
-    #cards {
-      width: 100%;
-      margin: 16px 0;
-    }
-    .card {
-      position: relative;
-      background: #fff;
-      overflow: hidden;
-      border: 1px solid #F2F2F2;
-      border-radius: 16px;
-      min-height: 240px;
-      display: flex;
-      flex-direction: column;
-      padding: 24px;
+    .fade-out {
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.2s ease-in;
     }
-    .card.show { opacity: 1; }
-    .card-content {
-      flex: 1;
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.2s ease-in-out forwards;
+    }
+    * {
+      transition: all 0.3s ease-in-out;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
-      z-index: 2;
-    }
-    .card-content.final h3:first-child {
-      font-size: 14px;
-      color: #554D59;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .card-content.final h3:nth-child(2) {
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-      color: #AC5FD9;
-      margin-bottom: 8px;
-    }
-    .card-content h3 {
-      color: #554D59;
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      text-transform: uppercase;
+      height: 100vh;
+      margin: 0;
       text-align: center;
+      overflow: hidden;
     }
-    .description {
-      margin-top: 4px;
-      font-size: 14px;
-      color: #554D59;
-      text-align: center;
-    }
-    .status {
-      margin-top: 4px;
-      font-size: 14px;
-      color: #444;
-      text-align: center;
-      font-weight: 900;
-    }
-    .terms {
-      width: 100%;
-      font-size: 14px;
-      color: #554D59;
-      padding: 16px;
+    #initialOptions, #subOptions {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 8px;
-      border: 1px solid #F2F2F2;
-      border-radius: 16px;
-      background: #FAFAFA;
-    }
-    .terms-content {
-      gap: 8px;
-      display: flex;
-      flex-direction: row;
       align-items: center;
       justify-content: center;
     }
-    .terms-content i {
-      color: #8D7F93;
-      margin-top: 2px;
-    }
-    button {
-      padding: 8px 16px;
-      margin: 16px 0 0;
-      background: #FAFAFA;
+    .option-button {
+      padding: 8px 8px;
+      margin: 4px 0;
+      background-color: #fff;
       color: #AC5FD9;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       font-weight: 800;
-      width: auto;
+      transition: background 0.3s ease;
+      width: 192px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .option-button i {
+      font-weight: 900;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .suggestion {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+      z-index: 2;
+    }
+    .drink-name {
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #AC5FD9;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .choice-buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 4px;
+      justify-content: center;
+      margin-top: 16px;
+      opacity: 1;
+      z-index: 2;
+    }
+    .choice-buttons button {
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 8px;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      cursor: pointer;
-      transition: opacity 0.4s ease;
-      z-index: 2;
+      background-color: #fff;
+      color: #554D59;
+      overflow: hidden;
     }
-    button:disabled {
-      color: #EFCFFF;
-      cursor: not-allowed;
-    }
-    .progress-bar {
+    .choice-buttons button i {
+      color: #AC5FD9;
+      font-weight: 900;
+      font-size: 20px;
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-      z-index: 2;
+      align-items: center;
+      justify-content: center;
     }
-    .progress-segment {
-      flex: 1;
-      height: 8px;
-      background: #FAFAFA;
-      border-radius: 4px;
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      opacity: 0.9;
+      animation: explode 1.6s ease-out forwards;
+      z-index: 1;
     }
-    .progress-segment.filled { background: #B4F7D4; }
-    #error-msg {
-      text-align: center;
-      color: #D12C2C;
+    .page-title {
+      color:#554D59;
       font-size: 14px;
-      font-weight: 800;
-      display: none;
+      font-weight: 900;
+      margin: 24px 0 8px 0;
+      text-transform: uppercase;
+    }
+    @keyframes explode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(0.8);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div style="width: 100%;">
-    <div id="error-msg"></div>
-    <div id="cards"></div>
-    <div class="terms">
-      <div class="terms-content"><i class="fi fi-rr-settings"></i>Allow location access when prompted</div>
-      <div class="terms-content"><i class="fi fi-rr-home-location-alt"></i>Be inside the Coffee Hut</div>
-    </div>
+  <h2 id="mainTitle" class="page-title">Pick your style</h2>
+  <div id="initialOptions">
+    <button class="option-button" id="coffeeBtn"><i class="fi fi-rr-coffee-bean"></i>Coffee Drinks</button>
+    <button class="option-button" id="noncoffeeBtn"><i class="fi fi-rr-glass-champagne"></i>Non-Coffee Drinks</button>
+    <button class="option-button" id="snacksBtn"><i class="fi fi-rr-candy"></i></i>Snacks</button>
   </div>
+
+  <div id="subOptions"></div>
+  <div id="suggestion" class="suggestion"></div>
+  <div id="choiceButtons" class="choice-buttons"></div>
+
   <script>
-    const delay = 15;
-    const finalDelay = 15;
-    const hutLat = 30.054164, hutLng = 31.201395;
-    const hutRadius = 0.15;
-    let step = +localStorage.stepIndex || 0;
-    let start = +localStorage.stepStart || Date.now();
-    const save = () => { localStorage.stepIndex = step; localStorage.stepStart = start; };
-    const clearAll = () => {
-      clearInterval(window.timer);
-      clearInterval(window.finalTimer);
-    };
-    const reset = () => { clearAll(); step = 0; start = Date.now(); save(); render(); };
-    const formatTime = (s) => {
-      const m = Math.floor(s / 60);
-      const ss = s % 60;
-      return `00 : ${m.toString().padStart(2,'0')} : ${ss.toString().padStart(2,'0')}`;
-    };
-    const progressBar = c => {
-      const bar = document.createElement('div'); bar.className = 'progress-bar';
-      for (let i = 0; i < 3; i++) {
-        const seg = document.createElement('div'); seg.className = 'progress-segment' + (i < step ? ' filled' : ''); bar.append(seg);
-      }
-      c.append(bar);
-    };
-
-    function checkProximity(callback) {
-      if (!navigator.geolocation) return callback('geo');
-      navigator.geolocation.getCurrentPosition(pos => {
-        const { latitude, longitude } = pos.coords;
-        const dx = latitude - hutLat;
-        const dy = longitude - hutLng;
-        const dist = Math.sqrt(dx * dx + dy * dy) * 111.32;
-        if (dist > hutRadius) return callback('far');
-        callback();
-      }, err => callback('geo'));
+    function vibrate(duration = 50) {
+      if (navigator.vibrate) navigator.vibrate(duration);
     }
 
-    function render() {
-      clearAll();
-      const root = document.getElementById('cards'); root.innerHTML = '';
-      const err = document.getElementById('error-msg'); if (err) err.style.display = 'none';
-      if (step > 3) return reset();
-      const card = document.createElement('div'); card.className = 'card'; progressBar(card);
-      const content = document.createElement('div'); content.className = 'card-content' + (step===3?' final':'');
-      if (step===3) {
-        const t1 = document.createElement('h3'); t1.textContent = 'Your Offer Is Ready'; content.append(t1);
-        const t2 = document.createElement('h3'); t2.textContent = "🎉 LET'S GOOO!"; content.append(t2);
-        const d1 = document.createElement('div'); d1.className='description'; d1.textContent='Show this to the cashier before time runs out'; content.append(d1);
-        const st = document.createElement('div'); st.className='status'; content.append(st);
-        card.append(content); root.append(card); requestAnimationFrame(()=>card.classList.add('show'));
-        (function updateFinal() {
-          const r = finalDelay - Math.floor((Date.now()-start)/1000);
-          if (r>0) st.textContent = formatTime(r); else reset();
-        })();
-        window.finalTimer = setInterval(() => {
-          const r = finalDelay - Math.floor((Date.now()-start)/1000);
-          if (r>0) st.textContent = formatTime(r); else reset();
-        },1000);
-        return;
-      }
-      const title = document.createElement('h3');
-      title.textContent = step === 0 ? "Welcome, Challenger" : step === 1 ? "Almost There" : "Almost Done";
-      content.append(title);
-      const elapsed = Math.floor((Date.now()-start)/1000);
-      const desc = document.createElement('div'); desc.className='description';
-      let currentDesc = step===0?'Check-in to unlock level 2 🚀':
-        step===1?(elapsed<delay?'Next challenge loading ⏳':'Just one more push to win 🔥'):
-        (elapsed<delay?'Next challenge loading ⏳':'Your reward is waiting for you 🏆');
-      desc.textContent = currentDesc; content.append(desc);
-      let status;
-      const btn = document.createElement('button');
-      btn.textContent = (step === 0 || step === 1) ? 'Next Mission' : 'Claim Now';
-      btn.disabled=(step>0&&elapsed<delay); content.append(btn);
+    const menus = {
+      coffee: {
+        hot: ["Espresso", "Americano", "Macchiato", "Caramel Macchiato", "Mocha", "White Mocha", "Flat White", "Cortado", "Cappuccino", "Latte", "Latte Lotus", "Latte Pistachio", "Turkish Coffee", "French Coffee"],
+        iced: ["Mocha Iced", "White Mocha Iced", "Americano Iced", "Latte Iced", "Spanish Latte", "Caramel Macchiato Iced", "Espresso Orange Iced", "Frappuccino", "Caramel Frappe", "Mocha Frappe", "White Mocha Frappe", "Toffee Nut Frappe", "Hazelnut Frappe", "Vanilla Frappe"]
+      },
+      noncoffee: {
+        cold: ["Lemon Mint Mojito", "Peach Mojito", "Blue Curacao Mojito", "Watermelon Juice", "Watermelon Mint Juice", "Peach Milk Blend", "Mango Milk Blend", "Strawberry Milk Blend", "Kiwi Milk Blend", "Mix Berry Milk Blend", "Caramel Milk Blend", "Vanilla Milk Blend", "Mango Juice", "Strawberry Juice", "Kiwi Juice", "Orange Juice", "Lemon Classic Juice", "Pink Lemon Juice", "Pina Colada Smoothie", "Pineapple Smoothie", "Mix Berry Smoothie", "Tropical Hut", "Green Mix", "Energy Mix", "Oreo Iced Chocolate", "Strawberry Iced Chocolate", "Hazelnut Iced Chocolate"],
+        hot: ["Tea", "Flavor Tea", "Green Tea With Mint", "Earl Gray", "Herbs", "Hot Dark Chocolate", "Hot White Chocolate", "Hot Seder", "Sahlab"]
+      },
+      snacks: ["Chocolate Waffle", "Pistachio Waffle", "Coffee Waffle", "Caramel Waffle", "Lotus Waffle", "Half & Half Waffle", "Sweet Lovers Yogurt", "Fruit Crush Yogurt", "Cookies"]
+    };
 
-      if (step>0 && elapsed<delay) {
-        status = document.createElement('div'); status.className='status'; status.textContent=formatTime(delay-elapsed); content.append(status);
-        window.timer = setInterval(()=>{
-          const r = delay - Math.floor((Date.now()-start)/1000);
-          if (r>0) {
-            status.textContent=formatTime(r);
-          } else {
-            clearInterval(window.timer); status.remove(); btn.disabled=false;
-            desc.textContent = step===1 ? 'Just one more push to win 🔥' : 'Your reward is waiting for you 🏆';
-          }
-        },1000);
-      }
+    document.getElementById("coffeeBtn").onclick = () => { vibrate(); selectCategory("coffee"); };
+    document.getElementById("noncoffeeBtn").onclick = () => { vibrate(); selectCategory("noncoffee"); };
+    document.getElementById("snacksBtn").onclick = () => { vibrate(); selectCategory("snacks"); };
 
-      btn.addEventListener('click',()=>{
-        checkProximity(error => {
-          const err = document.getElementById('error-msg');
-          if (error === 'far') {
-            err.textContent = 'You must be at Coffee Hut to proceed';
-            err.style.display = 'block';
-          } else if (!error) {
-            err.style.display = 'none';
-            clearAll(); step++; start=Date.now(); save(); render();
-          }
-        });
-      });
+    function selectCategory(category) {
+      document.getElementById("initialOptions").classList.add("fade-out");
+      document.getElementById("mainTitle").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("mainTitle").style.display = "none";
+        document.getElementById("initialOptions").style.display = "none";
+        document.getElementById("suggestion").innerHTML = "";
+        document.getElementById("choiceButtons").innerHTML = "";
+        const sub = document.getElementById("subOptions");
+        const titleMap = {
+          coffee: 'Coffee Drinks',
+          noncoffee: 'Non-Coffee Drinks',
+          snacks: 'Snacks'
+        };
 
-      card.append(content); root.append(card); requestAnimationFrame(()=>card.classList.add('show'));
+        if (category === 'coffee' || category === 'noncoffee') {
+          const titleHeader = `<h3 class='page-title'>${titleMap[category]}</h3>`;
+          const option1 = category === 'coffee' ? 'hot' : 'cold';
+          const option2 = category === 'coffee' ? 'iced' : 'hot';
+          const label1 = category === 'coffee' ? '<i class="fi fi-rr-mug-hot"></i>Hot Coffee' : '<i class="fi fi-rr-glass-citrus"></i>Refresh Me';
+          const label2 = category === 'coffee' ? '<i class="fi fi-rr-beer"></i>Iced Coffee' : '<i class="fi fi-rr-mug-hot"></i>Keep Me Warm';
+          const option1Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option1}')">${label1}</button>`;
+          const option2Btn = `<button class='option-button fade-in' onclick="vibrate(); suggestDrink('${category}', '${option2}')">${label2}</button>`;
+          sub.innerHTML = titleHeader + option1Btn + option2Btn;
+        } else {
+          suggestDrink(category);
+        }
+      }, 200);
     }
-    if (!localStorage.stepStart) save(); render();
+
+    let selectedDrink = "";
+    function suggestDrink(category, subcategory = null) {
+      document.getElementById("subOptions").classList.add("fade-out");
+      setTimeout(() => {
+        const suggestion = document.getElementById("suggestion");
+        suggestion.classList.add("fade-in");
+        const buttons = document.getElementById("choiceButtons");
+        document.getElementById("subOptions").innerHTML = "";
+        document.getElementById("subOptions").classList.remove("fade-out");
+
+        let list = subcategory ? menus[category][subcategory] : menus[category];
+
+        const randomDrink = list[Math.floor(Math.random() * list.length)];
+        selectedDrink = randomDrink;
+        suggestion.innerHTML = `<div class='drink-name' id='drinkText'>${randomDrink}?</div>`;
+        suggestion.style.animation = 'none';
+        void suggestion.offsetWidth;
+        suggestion.style.animation = null;
+
+        const textEl = document.getElementById("drinkText");
+        if (textEl) {
+          setTimeout(() => launchConfetti(textEl), 50);
+        }
+
+        buttons.innerHTML = `
+          <button onclick="vibrate(); acceptSuggestion()">
+            <i class="fi fi-rr-social-network"></i>
+          </button>
+          <button onclick="vibrate(); suggestDrink('${category}', '${subcategory || ''}')">
+            <i class="fi fi-rr-hand"></i>Spin Again
+          </button>
+        `;
+      }, 200);
+    }
+
+    function acceptSuggestion() {
+      const suggestion = document.getElementById("suggestion");
+      const buttons = document.getElementById("choiceButtons");
+      buttons.style.opacity = 1;
+
+      suggestion.innerHTML = `
+        <div class="page-title">${selectedDrink}</div>
+        <div class='drink-name'>🎉  Let’s gooo!</div>
+        <div style="margin-top: 4px; font-size: 14px;">Tell the crew what you picked.</div>
+        <div class='choice-buttons'>
+          <button onclick="vibrate(); resetGame()">
+            <i style="font-size: 14px;" class="fi fi-rr-refresh"></i> Spin Again
+          </button>
+        </div>
+      `;
+
+      buttons.innerHTML = "";
+    }
+
+    function resetGame() {
+      document.getElementById("initialOptions").classList.add("fade-out");
+      setTimeout(() => {
+        document.getElementById("choiceButtons").classList.add("fade-in");
+        document.getElementById("suggestion").innerHTML = "";
+        document.getElementById("choiceButtons").innerHTML = "";
+        document.getElementById("subOptions").innerHTML = "";
+        document.getElementById("initialOptions").style.display = "flex";
+        document.getElementById("initialOptions").classList.remove("fade-out");
+        document.getElementById("mainTitle").style.display = "block";
+        document.getElementById("mainTitle").classList.remove("fade-out");
+      }, 200);
+    }
+
+    function launchConfetti(centerEl) {
+      const rect = centerEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        confetti.style.left = centerX + 'px';
+        confetti.style.top = centerY + 'px';
+        confetti.style.setProperty('--x', `${Math.random() * 200 - 100}px`);
+        confetti.style.setProperty('--y', `${Math.random() * 200 - 100}px`);
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1600);
+      }
+    }
   </script>
 </body>
 </html>
