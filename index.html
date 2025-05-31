@@ -18,7 +18,7 @@
     }
     #cards {
       width: 100%;
-      margin-bottom: 16px;
+      margin: 16px 0;
     }
     .card {
       position: relative;
@@ -141,13 +141,14 @@
       text-align: center;
       color: #D12C2C;
       font-size: 14px;
-      margin-bottom: 12px;
+      font-weight: 800;
       display: none;
     }
   </style>
 </head>
 <body>
   <div style="width: 100%;">
+    <div id="error-msg"></div>
     <div id="cards"></div>
     <div class="terms">
       <div class="terms-content"><i class="fi fi-rr-settings"></i>Allow location access when prompted</div>
@@ -157,8 +158,8 @@
   <script>
     const delay = 15;
     const finalDelay = 15;
-    const hutLat = 30.054164, hutLng = 31.201395; // Location of Coffee Hut
-    const hutRadius = 0.15; // in km (150 meters)
+    const hutLat = 30.054164, hutLng = 31.201395;
+    const hutRadius = 0.15;
     let step = +localStorage.stepIndex || 0;
     let start = +localStorage.stepStart || Date.now();
     const save = () => { localStorage.stepIndex = step; localStorage.stepStart = start; };
@@ -186,7 +187,7 @@
         const { latitude, longitude } = pos.coords;
         const dx = latitude - hutLat;
         const dy = longitude - hutLng;
-        const dist = Math.sqrt(dx * dx + dy * dy) * 111.32; // km
+        const dist = Math.sqrt(dx * dx + dy * dy) * 111.32;
         if (dist > hutRadius) return callback('far');
         callback();
       }, err => callback('geo'));
@@ -195,7 +196,7 @@
     function render() {
       clearAll();
       const root = document.getElementById('cards'); root.innerHTML = '';
-      const err = document.getElementById('error-msg'); if (err) err.remove();
+      const err = document.getElementById('error-msg'); if (err) err.style.display = 'none';
       if (step > 3) return reset();
       const card = document.createElement('div'); card.className = 'card'; progressBar(card);
       const content = document.createElement('div'); content.className = 'card-content' + (step===3?' final':'');
@@ -243,12 +244,12 @@
 
       btn.addEventListener('click',()=>{
         checkProximity(error => {
+          const err = document.getElementById('error-msg');
           if (error === 'far') {
-            let msg = document.createElement('div');
-            msg.id = 'error-msg';
-            msg.textContent = 'You must be at Coffee Hut to proceed';
-            root.prepend(msg);
+            err.textContent = 'You must be at Coffee Hut to proceed';
+            err.style.display = 'block';
           } else if (!error) {
+            err.style.display = 'none';
             clearAll(); step++; start=Date.now(); save(); render();
           }
         });
